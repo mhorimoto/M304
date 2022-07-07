@@ -1,3 +1,4 @@
 (sym_lib_table
   (lib (name "NIC")(type "KiCad")(uri "${KIPRJMOD}/NIC.kicad_sym")(options "")(descr ""))
+  (lib (name "Akizuki")(type "KiCad")(uri "/home/horimoto/work/KiCAD/KiCAD_lib/akizuki.kicad_sym")(options "")(descr ""))
 )
