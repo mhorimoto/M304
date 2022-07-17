@@ -3555,6 +3555,10 @@
     (stroke (width 0) (type solid) (color 0 0 0 0))
     (uuid 79b56484-da79-4b15-b6f1-eb9208b59191)
   )
+  (wire (pts (xy 83.82 163.83) (xy 133.35 163.83))
+    (stroke (width 0) (type default) (color 0 0 0 0))
+    (uuid 7a313500-0c5d-4772-8430-9f06c7b083a9)
+  )
   (wire (pts (xy 252.73 30.48) (xy 255.27 30.48))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid 7a6fd617-1341-43b4-ac2d-681c427c7ed5)
@@ -3775,10 +3779,6 @@
   (wire (pts (xy 99.06 148.59) (xy 99.06 139.7))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid 8e934ffc-c4c5-48fc-a606-a6fba53f6332)
-  )
-  (wire (pts (xy 133.35 163.83) (xy 125.73 163.83))
-    (stroke (width 0) (type solid) (color 0 0 0 0))
-    (uuid 8ee7724d-4f03-4791-861a-6d8012dec408)
   )
   (wire (pts (xy 104.14 109.22) (xy 135.89 109.22))
     (stroke (width 0) (type default) (color 0 0 0 0))
@@ -4015,6 +4015,10 @@
   (wire (pts (xy 118.11 138.43) (xy 118.11 118.11))
     (stroke (width 0) (type default) (color 0 0 0 0))
     (uuid a96aac5c-a116-4558-ab85-d92f594c91a9)
+  )
+  (wire (pts (xy 83.82 163.83) (xy 83.82 165.354))
+    (stroke (width 0) (type default) (color 0 0 0 0))
+    (uuid aa89f930-0842-4175-a1bf-2294727fe401)
   )
   (wire (pts (xy 271.78 17.78) (xy 269.24 17.78))
     (stroke (width 0) (type default) (color 0 0 0 0))
@@ -7175,22 +7179,6 @@
     (pin "2" (uuid c47c878b-0ad2-4526-b0aa-22c6a32fa848))
   )
 
-  (symbol (lib_id "Connector_Generic:Conn_01x01") (at 120.65 163.83 0) (mirror y) (unit 1)
-    (in_bom yes) (on_board yes)
-    (uuid c9444dbf-6a90-407d-8c6b-f91ec54f63d1)
-    (property "Reference" "JD31" (id 0) (at 116.84 163.83 0))
-    (property "Value" "Conn_01x01" (id 1) (at 120.65 161.3971 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Footprint" "Connector_Pin:Pin_D0.9mm_L10.0mm_W2.4mm_FlatFork" (id 2) (at 120.65 163.83 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (property "Datasheet" "~" (id 3) (at 120.65 163.83 0)
-      (effects (font (size 1.27 1.27)) hide)
-    )
-    (pin "1" (uuid a71e002f-3a80-476d-b6e3-bf99ea920973))
-  )
-
   (symbol (lib_id "power:GND") (at 33.02 109.22 0) (unit 1)
     (in_bom yes) (on_board yes)
     (uuid ced8646b-e643-49f8-9dbb-1fabfed48cda)
@@ -7658,6 +7646,10 @@
       (effects (font (size 1.27 1.27)) (justify left))
       (uuid d3c7ab35-351a-435a-b8c1-7b2a97543b3d)
     )
+    (pin "STAT" input (at 83.82 165.354 90)
+      (effects (font (size 1.27 1.27)) (justify right))
+      (uuid efa73639-ab27-4f0c-8f22-58b9ba9dd7aa)
+    )
   )
 
   (sheet_instances
@@ -7856,10 +7848,10 @@
       (reference "#PWR0157") (unit 1) (value "GND") (footprint "")
     )
     (path "/923cf744-f246-4b99-9093-f86e5817e7a4/74b97936-4962-4d8c-8297-ea27e9c720cb"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+      (reference "#PWR0158") (unit 1) (value "GND") (footprint "")
     )
     (path "/923cf744-f246-4b99-9093-f86e5817e7a4/8eecf7a6-ba02-4b56-86c1-4b6121624f36"
-      (reference "#PWR?") (unit 1) (value "GND") (footprint "")
+      (reference "#PWR0159") (unit 1) (value "GND") (footprint "")
     )
     (path "/7629fb6d-20db-4e52-aca9-1faafbccf85c"
       (reference "BT1") (unit 1) (value "CR2032") (footprint "")
@@ -7884,6 +7876,9 @@
     )
     (path "/923cf744-f246-4b99-9093-f86e5817e7a4/2f63c7f0-f086-4f8a-bdde-1f28ba28f03c"
       (reference "D2-2") (unit 1) (value "LED") (footprint "")
+    )
+    (path "/923cf744-f246-4b99-9093-f86e5817e7a4/47483762-d7d0-4c20-b380-6fbcea955810"
+      (reference "D2-3") (unit 1) (value "1N4148") (footprint "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal")
     )
     (path "/6f005a80-49e2-4014-971a-0fdebe1c3bed"
       (reference "D3") (unit 1) (value "1N4148") (footprint "Diode_THT:D_DO-35_SOD27_P7.62mm_Horizontal")
@@ -7993,9 +7988,6 @@
     (path "/30f6d65c-332b-4331-9a54-452cdcd83635"
       (reference "JD30") (unit 1) (value "Conn_01x01") (footprint "Connector_Pin:Pin_D0.9mm_L10.0mm_W2.4mm_FlatFork")
     )
-    (path "/c9444dbf-6a90-407d-8c6b-f91ec54f63d1"
-      (reference "JD31") (unit 1) (value "Conn_01x01") (footprint "Connector_Pin:Pin_D0.9mm_L10.0mm_W2.4mm_FlatFork")
-    )
     (path "/b0e37c59-828f-45f4-9524-3ceeeb2c5150"
       (reference "JD48") (unit 1) (value "Conn_01x01") (footprint "Connector_Pin:Pin_D0.9mm_L10.0mm_W2.4mm_FlatFork")
     )
@@ -8085,6 +8077,9 @@
     )
     (path "/923cf744-f246-4b99-9093-f86e5817e7a4/32762aa4-b3bb-4fd0-83f5-b4ba177c6146"
       (reference "R2-2") (unit 1) (value "510") (footprint "")
+    )
+    (path "/923cf744-f246-4b99-9093-f86e5817e7a4/aaa27b19-2b0f-459a-a227-24bc82c9e15a"
+      (reference "R2-3") (unit 1) (value "510") (footprint "")
     )
     (path "/2447acfb-c168-4f85-b4d3-c3630454679c"
       (reference "R3") (unit 1) (value "10k") (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal")
