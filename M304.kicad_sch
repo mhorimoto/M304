@@ -6817,7 +6817,7 @@
     (property "Datasheet" "~" (id 3) (at 234.5904 89.6423 0)
       (effects (font (size 1.27 1.27)) hide)
     )
-    (property "Datasheet" "~" (id 3) (at 275.59 88.9 0)
+    (property "Datasheet" "~" (id 4) (at 275.59 88.9 0)
       (effects (font (size 1.27 1.27)) hide)
     )
     (pin "1" (uuid b701de6f-4357-4d6f-86ac-2b85ff2c7b80))
