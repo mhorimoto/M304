@@ -450,6 +450,10 @@
     [
       "923cf744-f246-4b99-9093-f86e5817e7a4",
       "Relay Manual Switch"
+    ],
+    [
+      "1e2511a2-7248-4cea-afb1-80995e2b8f5b",
+      "RTC"
     ]
   ],
   "text_variables": {}
