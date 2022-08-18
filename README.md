@@ -63,8 +63,33 @@ https://ja.aliexpress.com/item/4000226162371.html?spm=a2g0o.productlist.0.0.108b
 |自動|   H     |
 |手動|   L     |
 
+### 2-3. iM920 Interface (J3)
+iM920用のインタフェースで3.3V駆動です.
 
-### 2-3. Arrow Switch
+| J3 PIN | NAME  | I/O PIN |
+|:------:|-------|:-------:|
+|    1   | RESET |    D6   |
+|    2   | BUSY  |    D2   |
+|    3   | GND   |   GND   |
+|    4   | Vcc   |   3.3V  |
+|    5   | TX    | D19(Rx) |
+|    6   | RX    | D18(Tx) |
+|    7   | STATUS|   D5    |
+
+### 2-4. GNSS(GPS) Interface (J4)
+秋月電子通商のGNSSキット用．
+
+| J4 PIN | NAME  | I/O PIN  |
+|:------:|-------|:--------:|
+|    1   | 1PPS  |    D4    |
+|    2   | RX    | D14(Tx3) |
+|    3   | TX    | D15(Rx3) |
+|    4   | GND   |   GND    |
+|    5   | Vcc   |   +5V    |
+
+
+
+### 2-5. Arrow Switch
 
 アクティブローである．
 
@@ -76,24 +101,24 @@ https://ja.aliexpress.com/item/4000226162371.html?spm=a2g0o.productlist.0.0.108b
 |   35    |  ← (SW_C) | SW4 |
 |   36    |  → (SW_D) | SW5 |
 
-### 2-4. 選択
+### 2-6. 選択
 ADCに接続している．ロータリーエンコーダの代わりにADCの出力を得て選択する．
 
 | I/O PIN | 表示 | 回路図記号 |
 |:----:|:-------------:|:---:|
 |  A15 | 選択(SELECTOR) | RV2 |
 
-### 2-5. RESET
+### 2-7. RESET
 リセットボタンはArduino MEGAのRESETピンへ直結していると同時にNICのRESETピンにも接続されている．アクティブローである．
 
-### 2-6. SAFEMODE Switch
+### 2-8. SAFEMODE Switch
 UECSの初期設定を行う際に必要となるスイッチ．UARDECS_Libraryの既定値である
 
 | I/O PIN | 表示     | 回路図記号 |
 |:----:|:----------------:|:---:|
 |  D3  | 初期設定(SAFEMODE) | SW7 |
 
-### 2-7. JA pins (Analog ports)
+### 2-9. JA pins (Analog ports)
 以下のピン配置で3.3V用8ポート，5V用7ポートがある．
 ソフトウェアで入出力の両用に使える．
 
@@ -123,7 +148,7 @@ UECSの初期設定を行う際に必要となるスイッチ．UARDECS_Library�
 |  JA13 |  5V  |   A13   |
 |  JA14 |  5V  |   A14   |
 
-### 2-8. JD pins (Digital ports)
+### 2-10. JD pins (Digital ports)
 以下のピン配置で7ポートある．ソフトウェアで入出力を切り替えられる．
 
 | XH PIN | 意味                |
@@ -143,7 +168,7 @@ UECSの初期設定を行う際に必要となるスイッチ．UARDECS_Library�
 |  JD12 |   D12   |
 |  JD13 |   D13   |
 
-### 2-9. UART (JX2)
+### 2-11. UART (JX2)
 外部の装置とUART接続するためのポートが準備されている．
 ポート名はJX2．電圧レベルは5V．接続先の送受関係は，2ピンに対象体のRxを3ピンにTxを接続する．
 
@@ -154,7 +179,14 @@ UECSの初期設定を行う際に必要となるスイッチ．UARDECS_Library�
 |     2     | D16 (Tx2) |
 |     3     | D17 (Rx2) |
 
-### 2-10. 
+### 2-12. TEST Pad
+独自にテストを行う際の独立したDIO pinのパッド．
+
+| Pad名 | I/O PIN |
+|:-----:|:-------:|
+| JD30  |   D30   |
+| JD48  |   D48   |
+| JD49  |   D49   |
 
 
 
