@@ -27,14 +27,14 @@ LiquidCrystal lcd(RS,RW,ENA,DB0,DB1,DB2,DB3,DB4,DB5,DB6,DB7);
 
 void setup(void) {
   lcd.begin(20,4);
-  lcd.print("M304jp TP002");
+  lcd.print("M304jp TP002 Ver2.10");
   pinMode(SW_ENTER,INPUT_PULLUP);
   pinMode(SW_UP,INPUT_PULLUP);
   pinMode(SW_DOWN,INPUT_PULLUP);
   pinMode(SW_LEFT,INPUT_PULLUP);
   pinMode(SW_RIGHT,INPUT_PULLUP);
   pinMode(SW_SAFE,INPUT_PULLUP);
-  pinMode(SW_RLY,INPUT_PULLUP);
+  pinMode(SW_RLY,INPUT);
   pinMode(SELECT_VR,INPUT);
   lcd.setCursor(8,1);
   lcd.print("SAFE:");
@@ -73,13 +73,13 @@ void loop(void) {
   } else {
     lcd.print(" ");
   }
-  lcd.setCursor(3,2);
+  lcd.setCursor(2,2);
   if ( l == LOW ) {
     lcd.print("<");
   } else {
     lcd.print(" ");
   }
-  lcd.setCursor(7,2);
+  lcd.setCursor(4,2);
   if ( r == LOW ) {
     lcd.print(">");
   } else {
@@ -93,10 +93,20 @@ void loop(void) {
   }
   lcd.setCursor(13,2);
   if ( o == LOW ) {
-    lcd.print("AUTO  ");
-  } else {
     lcd.print("MANUAL");
+  } else {
+    lcd.print("AUTO  ");
   }
   lcd.setCursor(13,3);
   lcd.print(a);
+  if (a<10) {
+    lcd.setCursor(14,3);
+    lcd.print("   ");
+  } else if (a<100) {
+    lcd.setCursor(15,3);
+    lcd.print("  ");
+  } else if (a<1000) {
+    lcd.setCursor(16,3);
+    lcd.print(" ");
+  }
 }
