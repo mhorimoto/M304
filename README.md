@@ -192,3 +192,13 @@ UECSの初期設定を行う際に必要となるスイッチ．UARDECS_Library�
 
 
 https://stackedit.io/app#
+
+
+## 3.Software
+
+### 3-1. M304_Library
+
+M304_Libraryは，M304を使用する際に初期化やポート名を決定してくれるヘッダファイルと若干の関数がまとめられたファイル．
+現状では，Arduino-IDE(arduino-cli)が使用できるディレクトリにコピーして使う．
+将来的には，このディレクトリから分離されて，Arduino-IDEなどのライブラリ管理から管理できるようにする．
+同時にUARDECS_MEGAとの整合も図る．

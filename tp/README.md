@@ -17,6 +17,11 @@ LCDの動作確認を行うプログラム
 
 ## tp004
 
+I2C EEPROMの動作確認を行うプログラム．  
+実体は，ardeeprom (https://github.com/mhorimoto/ardeeprom.git) である．
+
+## tp005
+
 Ethernetを用いたLAN接続動作確認を行うプログラム
 
 http://www.holly-linux.com/whoami/

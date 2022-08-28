@@ -1,100 +1,66 @@
-#include <LiquidCrystal.h>
-#include <SPI.h>
-#include <Ethernet2.h>
+// -*- C++ -*-
+//  Arduino の EEPROMを扱うユーティリティプログラム
+//
 
-/*** Define for LCD ***/
-#define RS     37
-#define RW     38
-#define ENA    39
-#define DB0    40
-#define DB1    41
-#define DB2    42
-#define DB3    43
-#define DB4    44
-#define DB5    45
-#define DB6    46
-#define DB7    47
+#include <M304.h>
 
-/*** Define for Arrow Key ***/
-#define SW_SAFE    3
-#define SW_RLY    31
-#define SW_ENTER  32
-#define SW_UP     33
-#define SW_DOWN   34
-#define SW_LEFT   35
-#define SW_RIGHT  36
-#define SELECT_VR A15
 
-/*** Define Relay Ports ***/
-#define  RLY1    22
-#define  RLY2    23
-#define  RLY3    24
-#define  RLY4    25
-#define  RLY5    26
-#define  RLY6    27
-#define  RLY7    28
-#define  RLY8    29
+char cha,cmnd[81],lbf[81];
+int  cp ;
+char *pgname = "M304jp TP004 Ver2.00";
 
-LiquidCrystal lcd(RS,RW,ENA,DB0,DB1,DB2,DB3,DB4,DB5,DB6,DB7);
-EthernetClient client;
-
-byte mac[] = { 0x02,0xA2,0x73,0x0B,0xFF,0xEE };
-byte ip[] = { 192,168,0,177 };
 void setup(void) {
-  lcd.begin(20,4);
-  lcd.print("M304jp TP004 Ver1.00");
-  pinMode(SW_ENTER,INPUT_PULLUP);
-  pinMode(SW_UP,INPUT_PULLUP);
-  pinMode(SW_DOWN,INPUT_PULLUP);
-  pinMode(SW_LEFT,INPUT_PULLUP);
-  pinMode(SW_RIGHT,INPUT_PULLUP);
-  pinMode(SW_SAFE,INPUT_PULLUP);
-  pinMode(SW_RLY,INPUT);
-  pinMode(SELECT_VR,INPUT);
-  pinMode(RLY1,OUTPUT);
-  digitalWrite(RLY1,HIGH);
-  pinMode(RLY2,OUTPUT);
-  digitalWrite(RLY2,HIGH);
-  pinMode(RLY3,OUTPUT);
-  digitalWrite(RLY3,HIGH);
-  pinMode(RLY4,OUTPUT);
-  digitalWrite(RLY4,HIGH);
-  pinMode(RLY5,OUTPUT);
-  digitalWrite(RLY5,HIGH);
-  pinMode(RLY6,OUTPUT);
-  digitalWrite(RLY6,HIGH);
-  pinMode(RLY7,OUTPUT);
-  digitalWrite(RLY7,HIGH);
-  pinMode(RLY8,OUTPUT);
-  digitalWrite(RLY8,HIGH);
-  lcd.setCursor(0,1);
-  lcd.print("Connect Console USB");
-  lcd.setCursor(0,2);
-  lcd.print("Baud:115200");
+  m304Init();
   Serial.begin(115200);
-  while(!Serial) {
-    ;
-  }
-  lcd.setCursor(0,3);
-  Ethernet.init(53);
-  Ethernet.begin(mac);
-  if (Ethernet.begin(mac)==0) {
-    Serial.println("Failed to configure Ethernet using DHCP.");
-    lcd.print("FAIL DHCP PLS RESET");
-  } else {
-    lcd.print("IP:");
-    Serial.print("IP:");
-    for (byte tb=0; tb<4; tb++) {
-      lcd.print(Ethernet.localIP()[tb],DEC);
-      lcd.print(".");
-      Serial.print(Ethernet.localIP()[tb],DEC);
-      if (tb<3) {
-        Serial.print(".");
-      }
-    }
-    Serial.println();
-  }
+  Serial.println(pgname);
+  sprintf(lbf,"Arduino EEPROM SIZE 0-%03XH(%d bytes)",EEPROM.length()-1,EEPROM.length());
+  Serial.println(lbf);
+  Serial.println("AT24LC256 EEPROM SIZE 0-7FFFH(32,768bytes)");
+  cha = (char)NULL;
+  cp  = 0;
 }
 
 void loop(void) {
+  bool reading;
+  String s;
+  reading = true;
+  cp = 0;
+  Serial.print("% ");
+  Serial.flush();
+  while(reading) {
+    if (Serial.available() > 0) {
+      cha = Serial.read();
+      if ((cha>=0x20)&&(cha<=0x7e)) {
+	cmnd[cp] = (char)cha;
+	Serial.print(cha);
+	cp++;
+      } else if (cha==0x08) {
+	if (cp>0) {
+	  cmnd[cp] = (char)NULL;
+	  Serial.write(0x08);
+	  Serial.print(" ");
+	  Serial.write(0x08);
+	  cp--;
+	}
+      } else if ((cha==0x0a)||(cha==0x0d)) {
+	reading = false;
+	Serial.println();
+	cmnd[cp] = (char)NULL;
+	s = String(cmnd);
+      }
+    }
+  }
+  if (s.indexOf("dump")==0) {
+    cmnd_dump(s,-1);
+  } else if (s.indexOf("atdump")==0) {
+    cmnd_dump(s,0);
+  } else if (s.indexOf("setb")==0) {
+    cmnd_setbyte(s,-1);
+  } else if (s.indexOf("atsetb")==0) {
+    cmnd_setbyte(s,0);
+  } else if (s.indexOf("fill")==0) {
+    cmnd_fill(s,-1);
+  } else if (s.indexOf("atfill")==0) {
+    cmnd_fill(s,0);
+  }
 }
