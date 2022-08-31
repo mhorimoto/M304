@@ -196,7 +196,24 @@ https://stackedit.io/app#
 
 ## 3.Software
 
-### 3-1. M304_Library
+### 3-1. AT24C256 EEPROM
+
+データの保存を行う他に重要な役割がある．
+
+UECS-IDとMACアドレスを以下のアドレスに記録する．MSB first，Big endianにて記録する．
+
+|  Address      | Data        |
+|:-------------:|:------------|
+| 00H〜05H      | UECS-ID     |
+| 06H〜0BH      | MAC Address |
+| 0CH〜1FH      | Reserved    |
+| 20H〜7FFFH    | Data        |
+
+* UECS-ID: 10100C00000B
+* MAC Address: 02:A2:73:0B:xx:xx
+
+
+### 3-2. M304_Library
 
 M304_Libraryは，M304を使用する際に初期化やポート名を決定してくれるヘッダファイルと若干の関数がまとめられたファイル．
 現状では，Arduino-IDE(arduino-cli)が使用できるディレクトリにコピーして使う．

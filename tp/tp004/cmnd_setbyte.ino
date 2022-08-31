@@ -8,16 +8,8 @@ void cmnd_setbyte(String p,int at) {
   ofs2 = p.indexOf(" ",ofs1+1);
   if (ofs1>0) {  // アドレス引数がある
     q = p.substring(ofs1,ofs2);
-    Serial.print("q=");
-    Serial.println(q);
-    Serial.print("ofs1=");
-    Serial.println(ofs1);
-    Serial.print("ofs2=");
-    Serial.println(ofs2);
     q.toCharArray(&buf[0],7);
     addr = (unsigned int)strtol(buf,NULL,16);
-    Serial.print("Addr=");
-    Serial.println(addr,HEX);
 
     if (at==-1) { // EEPROM with CPU
       if (addr >= EEPROM.length()) {
@@ -38,7 +30,6 @@ void cmnd_setbyte(String p,int at) {
       d = (int)strtol(buf,NULL,16);
       sprintf(lbf,"[%04XH]<=%02XH",addr,d);
       Serial.println(lbf);
-      return;
       if (at==-1) {
         v = EEPROM.read(addr);
         if (v!=d) {

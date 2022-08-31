@@ -1,5 +1,5 @@
 // -*- C++ -*-
-//  Arduino の EEPROMを扱うユーティリティプログラム
+//  Arduino と外付け AT24C256 の EEPROMを扱うユーティリティプログラム
 //
 
 #include <M304.h>
