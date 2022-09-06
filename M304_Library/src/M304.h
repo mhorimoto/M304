@@ -48,10 +48,16 @@
 #define AT24LC254_ADDR   0x50
 #define AT24LC254_INDEX  0
 
+/*** EEPROM LOWCORE ASSIGN ***/
+#define LC_UECS_ID  0
+#define LC_MAC      6
+#define LC_START    0x20
+#define LC_END      0x7fff
 
   #ifndef _M304_CPP_
     extern void m304Init(void);
   #endif
   extern LiquidCrystal lcd;
   extern AT24C256      atmem;
+  extern EthernetClient client;
 #endif

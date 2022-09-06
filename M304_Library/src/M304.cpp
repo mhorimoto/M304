@@ -4,9 +4,10 @@
 extern char *pgname;
 LiquidCrystal lcd(RS,RW,ENA,DB0,DB1,DB2,DB3,DB4,DB5,DB6,DB7);
 AT24C256      atmem(0);
+EthernetClient client;
 
 void m304Init(void) {
-
+  Ethernet.init(53);
   pinMode(SW_ENTER,INPUT_PULLUP);
   pinMode(SW_UP,INPUT_PULLUP);
   pinMode(SW_DOWN,INPUT_PULLUP);
