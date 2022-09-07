@@ -190,6 +190,19 @@ UECSの初期設定を行う際に必要となるスイッチ．UARDECS_Library�
 
 
 
+### 2-13. I2C Devices
+
+標準で搭載されているI2Cデバイスは以下の通り．
+
+| Address | 名称            |
+|:-------:|:----------------|
+| 0x50    | EEPROM AT24C256 |
+| 0x68    | RTC DS1307      |
+
+* EEPROM
+AT24C256 を使用している．32kBytesの容量がある．
+* RTC (Address=0x68)
+DS1307を使用してる．(DS1307RTC)
 
 https://stackedit.io/app#
 
