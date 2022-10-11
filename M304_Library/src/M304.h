@@ -7,6 +7,8 @@
 #include <Ethernet2.h>
 #include <EEPROM.h>
 #include <AT24CX.h>
+#include <Wire.h>
+#include <DS1307RTC.h>
 
 /*** Define for LCD ***/
 #define RS     37
@@ -54,9 +56,20 @@
 #define LC_START    0x20
 #define LC_END      0x7fff
 
+typedef struct stM304 {
+  byte mac[6];
+  boolean dhcpflag=true;
+  byte set_ip[4];
+  IPAddress ip;
+  IPAddress gw;
+  IPAddress dns;
+};
+
   #ifndef _M304_CPP_
     extern void m304Init(void);
+    extern void debug_print(void);
   #endif
+  extern stM304 st_m;
   extern LiquidCrystal lcd;
   extern AT24C256      atmem;
   extern EthernetClient client;

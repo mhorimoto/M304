@@ -27,3 +27,10 @@ Ethernetを用いたLAN接続動作確認を行うプログラム
 http://www.holly-linux.com/whoami/
 
 へアクセスして，自局のIPアドレスを表示します．DHCPサービスでローカルIPが必要になります．
+
+## tp006
+
+RTCを用いた時刻表示プログラム
+
+* DS1307RTC Library (https://github.com/PaulStoffregen/DS1307RTC.git)
+* Time Library (https://github.com/PaulStoffregen/Time)
