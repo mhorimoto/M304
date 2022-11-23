@@ -34,3 +34,8 @@ RTCを用いた時刻表示プログラム
 
 * DS1307RTC Library (https://github.com/PaulStoffregen/DS1307RTC.git)
 * Time Library (https://github.com/PaulStoffregen/Time)
+
+## tp007
+
+GPSを用いた時刻表示ブログラム
+
