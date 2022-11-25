@@ -10,7 +10,7 @@
 #define GPS_DATE    59
 
 int tpn=0 ;
-char *pgname = "M304jp TP007 Ver1.80";
+char *pgname = "M304jp TP007 Ver1.90";
 byte lcdtxt[4][21];
 
 struct GPS_DATA {
@@ -36,7 +36,6 @@ void setup(void) {
 
 void loop(void) {
   String lb,t,t_h,t_m,t_s,d_y,d_m;
-  int l_h; // Local time (+9);
   bool r;
   char *pt_lcd;
   
@@ -46,12 +45,8 @@ void loop(void) {
       r = decode_GPRMC(lb);
       pt_lcd = &lcdtxt[1][0];
       gps_data.st_year.toCharArray(&lcdtxt[1][0],5);
-      Serial.print("/");
-      Serial.println(pt_lcd);
       lcdtxt[1][4] = '/';
       gps_data.st_month.toCharArray(&lcdtxt[1][5],3);
-      Serial.print(gps_data.st_month);
-      Serial.print("/");
       lcdtxt[1][7] = '/';
       gps_data.st_day.toCharArray(&lcdtxt[1][8],3);
       lcdtxt[1][10] = ' ';
@@ -62,16 +57,64 @@ void loop(void) {
       gps_data.st_second.toCharArray(&lcdtxt[1][17],3);
       if (r) {
         lcdtxt[1][19] = 'A';
-        Serial.println(" A");
       } else {
         lcdtxt[1][19] = 'V';
-        Serial.println(" V");
       }
       lcd.setCursor(0, 1);
       lcd.print(pt_lcd);
-      Serial.println(pt_lcd);
+      switch(readRTC()) {
+      case 0:
+        pt_lcd = &lcdtxt[2][0];
+        break;
+      case 1:
+        pt_lcd = "RTC is stopped.";
+        break;
+      case 2:
+        pt_lcd = "RTC is absent.";
+        break;
+      default:
+        pt_lcd = "RTC unknown";
+      }
+      lcd.setCursor(0,2);
+      lcd.print(pt_lcd);
     }
   }
+}
+
+int readRTC(void) {
+  tmElements_t tm;
+  String s;
+  if (RTC.read(tm)) {
+    s = String(tmYearToCalendar(tm.Year));
+    s.toCharArray(&lcdtxt[2][0],5);
+    lcdtxt[2][4] = '/';
+    s = normalize_2col(tm.Month);
+    s.toCharArray(&lcdtxt[2][5],3);
+    lcdtxt[2][7] = '/';
+    s = normalize_2col(tm.Day);
+    s.toCharArray(&lcdtxt[2][8],3);
+    lcdtxt[2][10] = ' ';
+    s = normalize_2col(tm.Hour);
+    s.toCharArray(&lcdtxt[2][11],3);
+    lcdtxt[2][13] = ':';
+    s = normalize_2col(tm.Minute);
+    s.toCharArray(&lcdtxt[2][14],3);
+    lcdtxt[2][16] = ':';
+    s = normalize_2col(tm.Second);
+    s.toCharArray(&lcdtxt[2][17],3);
+  } else {
+    if (RTC.chipPresent()) {
+      return(1);
+      //      Serial.println("The DS1307 is stopped.  Please run the SetTime");
+      //      Serial.println("example to initialize the time and begin running.");
+      //      Serial.println();
+    } else {
+      return(2);
+      //      Serial.println("DS1307 read error!  Please check the circuitry.");
+      //      Serial.println();
+    }
+  }
+  return(0);
 }
 
 boolean decode_GPRMC(String lb) {
