@@ -37,5 +37,14 @@ RTCを用いた時刻表示プログラム
 
 ## tp007
 
-GPSを用いた時刻表示ブログラム
+GPSを用いた時刻表示ブログラム  
+GPSで得られた時刻とRTCで得られた時刻を並行表示する．
+
+## tp100
+
+一連のTPシリーズとは異なりTinyGSMを用いてLTE回線経由でインターネットアクセスする．
+
+* TinyGSM Library (https://github.com/vshymanskyy/TinyGSM.git)
+
+WebClientを試す．
 
