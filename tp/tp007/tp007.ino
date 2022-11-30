@@ -10,7 +10,7 @@
 #define GPS_DATE    59
 
 int tpn=0 ;
-char *pgname = "M304jp TP007 Ver1.90";
+char *pgname = "M304jp TP007 Ver1.92";
 byte lcdtxt[4][21];
 
 struct GPS_DATA {
@@ -57,8 +57,13 @@ void loop(void) {
       gps_data.st_second.toCharArray(&lcdtxt[1][17],3);
       if (r) {
         lcdtxt[1][19] = 'A';
+        tpn = 1;
       } else {
-        lcdtxt[1][19] = 'V';
+        if (tpn==1) {
+          lcdtxt[1][19] = 'v';
+        } else {
+          lcdtxt[1][19] = 'V';
+        }
       }
       lcd.setCursor(0, 1);
       lcd.print(pt_lcd);
