@@ -1,12 +1,12 @@
 #include <M304.h>
-#include "crosskey.h"
+//#include "crosskey.h"
 
 //struct KYBDMEM {
 //  uint8_t   kpos;
 //  uint16_t  selpos;
 //} ;
 
-char *pgname = "M304jp TP008 Ver1.02";
+char *pgname = "M304jp TP008 Ver1.10";
 
 void setup(void) {
   m304Init();
