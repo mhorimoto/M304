@@ -10,6 +10,11 @@
 #include <Wire.h>
 #include <DS1307RTC.h>
 
+/*** COMMON ***/
+
+#define TRUE   1
+#define FALSE  0
+
 /*** Define for LCD ***/
 #define RS     37
 #define RW     38

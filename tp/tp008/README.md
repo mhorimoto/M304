@@ -31,7 +31,7 @@ Table.2 selposの値
 |---------|----------|
 
 ### 1-2. 数値入力ルーティン
-#### long getNumberValue(int x0,int y0,uint8_t base,long min,long max,uint8_t cast,uint8_t fkey )
+#### boolean getNumberValue(int x0,int y0,uint8_t base,long min,long max,uint8_t cast,uint8_t fkey,uint8_t akey,long *lgval )
 #### parameters
 - x0: 入力表示を開始するx座標 0〜19
 - y0: 入力表示を開始するy座標 0〜3
@@ -39,10 +39,13 @@ Table.2 selposの値
 - min: A/D出力0のときの値
 - max: A/D出力0x3FFのときの値
 - cast: 表示桁数(右詰め空白パディング)
-- fkey: 入力終了キー
-
+- fkey: 入力確定キー
+- akey: 入力中断キー
+- lgval: 初期値を入れてコールする。確定した数値が戻ってくる。call by referenceで呼び出す。
+- 
 #### return
-入力正常終了時には範囲変換後の数値が32ビット整数として
+入力正常終了時には戻り値としてTRUEが返る。そして、範囲変換後の数値がlong型としてlgvalに格納される。
+入力中断時には戻り値としてFALSEが返る。そして、
 
 ## 2. 応用ルーティン
 
