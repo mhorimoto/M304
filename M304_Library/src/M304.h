@@ -85,6 +85,39 @@ struct KYBDMEM {
   uint16_t  selpos;
 };
 #endif
+#ifndef _M304_COMMON_KYBD
+#endif
+
+#ifndef _M304_COMMON_DISPLAY
+#define _M304_COMMON_DISPLAY 1
+
+class LCDd : public LiquidCrystal {
+ private:
+  char tarea[20][4];
+ public:
+ LCDd():LiquidCrystal(RS,RW,ENA,DB0,DB1,DB2,DB3,DB4,DB5,DB6,DB7) {
+  LiquidCrystal:init(0, RS,RW,ENA,DB0,DB1,DB2,DB3,DB4,DB5,DB6,DB7);
+};
+ LCDd(uint8_t rs, uint8_t enable,
+      uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+      uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7):
+  LiquidCrystal(rs,enable,d0,d1,d2,d3,d4,d5,d6,d7){
+  LiquidCrystal:init(0, rs,255,enable,d0,d1,d2,d3,d4,d5,d6,d7);
+};
+  LCDd(uint8_t rs, uint8_t rw, uint8_t enable,
+       uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3,
+       uint8_t d4, uint8_t d5, uint8_t d6, uint8_t d7):
+  LiquidCrystal(rs,rw,enable,d0,d1,d2,d3,d4,d5,d6,d7){};
+  LCDd(uint8_t rs, uint8_t rw, uint8_t enable,
+      uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
+  LCDd(uint8_t rs, uint8_t enable,
+      uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
+  void initWriteArea(void);
+  int  setWriteChar(int,int,char);
+  void LineWrite(int),PageWrite(void),CharWrite(int,int,char);
+};
+
+#endif
 
 #ifndef _M304_CPP_
     extern void m304Init(void);

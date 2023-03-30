@@ -78,4 +78,44 @@ void debug_print(void) {
   Serial.println(st_m.dns);
 }
 
+void LCDd::initWriteArea(void) {
+  int x,y;
+  for(y=0;y<4;y++) {
+    for(x=0;x<20;x++) {
+      LCDd::tarea[x][y] = ' ';
+    }
+  }
+}
+
+void LCDd::LineWrite(int y) {
+  int x;
+  if (y>3) return; 
+  LCDd::setCursor(0,y);
+  for(x=0;x<20;x++) {
+    LCDd::print(LCDd::tarea[x][y]);
+  }
+}
+
+void LCDd::PageWrite(void) {
+  int y;
+  for (y=0;y<4;y++) {
+    LCDd::LineWrite(y);
+  }
+}
+
+void LCDd::CharWrite(int x,int y,char a) {
+  if (LCDd::setWriteChar(x,y,a)) {
+    LCDd::setCursor(x,y);
+    LCDd::print(a);
+  }
+}
+  
+int LCDd::setWriteChar(int x,int y,char a) {
+  if ((x<20)&&(y<4)) {
+    LCDd::tarea[x][y] = a;
+    return 1;
+  }
+  return 0;
+}
+
 #undef _M304_CPP_
