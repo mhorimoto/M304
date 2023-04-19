@@ -16,18 +16,17 @@
 #define FALSE  0
 
 /*** Define for LCD ***/
-#define RS        37
-#define RW        38
-#define ENA       39
-#define DB0       40
-#define DB1       41
-#define DB2       42
-#define DB3       43
-#define DB4       44
-#define DB5       45
-#define DB6       46
-#define DB7       47
-#define PAGECNT    2
+#define RS     37
+#define RW     38
+#define ENA    39
+#define DB0    40
+#define DB1    41
+#define DB2    42
+#define DB3    43
+#define DB4    44
+#define DB5    45
+#define DB6    46
+#define DB7    47
 
 /*** Define for Arrow Key ***/
 #define SW_SAFE    3
@@ -94,7 +93,7 @@ struct KYBDMEM {
 
 class LCDd : public LiquidCrystal {
  private:
-  char tarea[PAGECNT][20][4];
+  char tarea[20][4];
  public:
  LCDd():LiquidCrystal(RS,RW,ENA,DB0,DB1,DB2,DB3,DB4,DB5,DB6,DB7) {
   LiquidCrystal:init(0, RS,RW,ENA,DB0,DB1,DB2,DB3,DB4,DB5,DB6,DB7);
@@ -113,9 +112,9 @@ class LCDd : public LiquidCrystal {
       uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
   LCDd(uint8_t rs, uint8_t enable,
       uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
-  void initWriteArea(int);
-  int  setWriteChar(int,int,int,char),getDataInt(int,int,int,int);
-  void LineWrite(int,int),PageWrite(int),CharWrite(int,int,int,char);
+  void initWriteArea(void);
+  int  setWriteChar(int,int,char);
+  void LineWrite(int),PageWrite(void),CharWrite(int,int,char);
 };
 
 #endif
