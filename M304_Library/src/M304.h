@@ -1,5 +1,6 @@
 #ifndef _M304_H_
 #define _M304_H_
+#define _M304_H_V  101
 
 #include <avr/pgmspace.h>
 #include <LiquidCrystal.h>
@@ -115,7 +116,7 @@ class LCDd : public LiquidCrystal {
       uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
   void initWriteArea(int);
   int  setWriteChar(int,int,int,char),getDataInt(int,int,int,int);
-  void LineWrite(int,int),PageWrite(int),CharWrite(int,int,int,char);
+  void LineWrite(int,int),PageWrite(int),CharWrite(int,int,int,char),IntWrite(int,int,int,int);
 };
 
 #endif
