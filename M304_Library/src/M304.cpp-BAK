@@ -78,44 +78,72 @@ void debug_print(void) {
   Serial.println(st_m.dns);
 }
 
-void LCDd::initWriteArea(void) {
+void LCDd::initWriteArea(int p) {
   int x,y;
+  if (p >= PAGECNT) return;
   for(y=0;y<4;y++) {
     for(x=0;x<20;x++) {
-      LCDd::tarea[x][y] = ' ';
+      LCDd::tarea[p][x][y] = ' ';
     }
   }
 }
 
-void LCDd::LineWrite(int y) {
+void LCDd::LineWrite(int p,int y) {
   int x;
   if (y>3) return; 
+  if (p >= PAGECNT) return;
   LCDd::setCursor(0,y);
   for(x=0;x<20;x++) {
-    LCDd::print(LCDd::tarea[x][y]);
+    LCDd::print(LCDd::tarea[p][x][y]);
   }
 }
 
-void LCDd::PageWrite(void) {
+void LCDd::PageWrite(int p) {
   int y;
+  if (p >= PAGECNT) return;
   for (y=0;y<4;y++) {
-    LCDd::LineWrite(y);
+    LCDd::LineWrite(p,y);
   }
 }
 
-void LCDd::CharWrite(int x,int y,char a) {
-  if (LCDd::setWriteChar(x,y,a)) {
+void LCDd::CharWrite(int p,int x,int y,char a) {
+  if (p >= PAGECNT) return;
+  if (LCDd::setWriteChar(p,x,y,a)) {
     LCDd::setCursor(x,y);
     LCDd::print(a);
   }
 }
   
-int LCDd::setWriteChar(int x,int y,char a) {
+int LCDd::setWriteChar(int p,int x,int y,char a) {
+  if (p >= PAGECNT) return;
   if ((x<20)&&(y<4)) {
-    LCDd::tarea[x][y] = a;
+    LCDd::tarea[p][x][y] = a;
     return 1;
   }
   return 0;
+}
+
+void LCDd::IntWrite(int p,int x,int y,int a) {
+  int i;
+  char sv[6];
+  if (p >= PAGECNT) return;
+  snprintf(sv,6,"%d",a);
+  //  if (LCDd::setWriteChar(p,x,y,a)) {
+  //    LCDd::setCursor(x,y);
+  //    LCDd::print(a);
+  //  }
+
+}
+
+int LCDd::getDataInt(int p,int x,int y,int w) {
+  int i,v;
+  char s[6];
+  if ((w>5)||(w<1))  return 0;
+  for(i=0;i<w;i++) {
+    s[i] = LCDd::tarea[p][x+i][y];
+  }
+  s[i]=(char)0;
+  v = int(s);
 }
 
 #undef _M304_CPP_

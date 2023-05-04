@@ -123,16 +123,28 @@ int LCDd::setWriteChar(int p,int x,int y,char a) {
   return 0;
 }
 
-void LCDd::IntWrite(int p,int x,int y,int a) {
+void LCDd::IntWrite(int p,int x,int y,int w,bool zp,int a) {
   int i;
-  char sv[6];
+  char sv[6],fmt[5];
+  Serial.begin(115200);
+  if ((w < 1) || (w > 5)) {
+    Serial.println("w out of range");
+    Serial.end();
+    return;
+  }
   if (p >= PAGECNT) return;
-  snprintf(sv,6,"%d",a);
-  //  if (LCDd::setWriteChar(p,x,y,a)) {
-  //    LCDd::setCursor(x,y);
-  //    LCDd::print(a);
-  //  }
-
+  if (zp) {
+    snprintf(fmt,5,"%%0%dd",w);
+  } else {
+    snprintf(fmt,4,"%%%dd",w);
+  }
+  Serial.end();
+  snprintf(sv,w+1,fmt,a);
+  if (LCDd::setWriteChar(p,x,y,a)) {
+    LCDd::setCursor(x,y);
+    LCDd::print(sv);
+  }
+  LCDd::setCursor(x,y);
 }
 
 int LCDd::getDataInt(int p,int x,int y,int w) {
