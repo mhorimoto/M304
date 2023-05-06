@@ -47,14 +47,15 @@ void m304Init(void) {
 /*********************************/
 struct KYBDMEM crosskey,*ptr_crosskey;
 struct KYBDMEM *getCrossKey(void) {
+  int CancelChattering(int);
   int e,u,d,l,r,a;
-  e = digitalRead(SW_ENTER);
-  u = digitalRead(SW_UP);
-  d = digitalRead(SW_DOWN);
-  l = digitalRead(SW_LEFT);
-  r = digitalRead(SW_RIGHT);
+  e = CancelChattering(SW_ENTER);
+  u = CancelChattering(SW_UP);
+  d = CancelChattering(SW_DOWN);
+  l = CancelChattering(SW_LEFT);
+  r = CancelChattering(SW_RIGHT);
   a = analogRead(SELECT_VR);
-  crosskey.kpos = 0;
+  // crosskey.kpos = 0;
   if (e==LOW) crosskey.kpos |= K_ENT;
   if (u==LOW) crosskey.kpos |= K_UP;
   if (d==LOW) crosskey.kpos |= K_DOWN;
@@ -63,6 +64,20 @@ struct KYBDMEM *getCrossKey(void) {
   crosskey.selpos = a;
   ptr_crosskey = &crosskey;
   return(ptr_crosskey);
+}
+
+int CancelChattering(int s) {
+  unsigned long gauge=0;
+  while(!digitalRead(s)) gauge++;
+  if ( gauge > PUSH_LONG ) {
+    crosskey.longf = true;
+    return(LOW);
+  }
+  if ( gauge > PUSH_SHORT ) {
+    crosskey.longf = false;
+    return(LOW);
+  }
+  return(HIGH);
 }
 
 void debug_print(void) {
@@ -123,6 +138,40 @@ int LCDd::setWriteChar(int p,int x,int y,char a) {
   return 0;
 }
 
+
+int LCDd::setLine(int p,int y,char *a) {
+  int i;
+  if (p>=PAGECNT) return(-1);
+  if ((y<0)||(y>3)) return(-2);
+  i=0;
+  while(*a>0x1f) {
+    LCDd::tarea[p][i][y] = *a;
+    i++;
+    a++;
+    if (i>=20) break;
+  }
+  return(0);
+}
+
+int LCDd::IntRead(int p,int x,int y,int w) {
+  char c[6];
+  int i;
+  if (p>=PAGECNT) return(-1);
+  if ((y<0)||(y>3)) return(-2);
+  if ((w<0)||(w>5)) return(-3);
+  for(i=0;i<w;i++) {
+    c[i] = LCDd::tarea[p][x+i][y];
+  }
+  c[i]=(char)NULL;
+  Serial.begin(115200);
+  Serial.print("IntRead=");
+  Serial.println(c);
+  Serial.end();
+  i = atoi(c);
+  return(i);
+}
+
+  
 void LCDd::IntWrite(int p,int x,int y,int w,bool zp,int a) {
   int i;
   char sv[6],fmt[5];
@@ -138,13 +187,24 @@ void LCDd::IntWrite(int p,int x,int y,int w,bool zp,int a) {
   } else {
     snprintf(fmt,4,"%%%dd",w);
   }
-  Serial.end();
   snprintf(sv,w+1,fmt,a);
-  if (LCDd::setWriteChar(p,x,y,a)) {
-    LCDd::setCursor(x,y);
-    LCDd::print(sv);
+  Serial.print("IntWrite sv=");
+  Serial.println(sv);
+  Serial.end();
+
+  for(int i=0;i<w;i++) {
+    LCDd::setWriteChar(p,x+i,y,sv[i]);
   }
   LCDd::setCursor(x,y);
+  LCDd::print(sv);
+  LCDd::setCursor(x,y);
+}
+
+char LCDd::CharRead(int p,int x,int y) {
+  char c;
+  if (p >= PAGECNT) return(-1);
+  c = LCDd::tarea[p][x][y];
+  return c;  
 }
 
 int LCDd::getDataInt(int p,int x,int y,int w) {
@@ -157,5 +217,6 @@ int LCDd::getDataInt(int p,int x,int y,int w) {
   s[i]=(char)0;
   v = int(s);
 }
+
 
 #undef _M304_CPP_

@@ -1,6 +1,6 @@
 #ifndef _M304_H_
 #define _M304_H_
-#define _M304_H_V  103
+#define _M304_H_V  104
 
 #include <avr/pgmspace.h>
 #include <LiquidCrystal.h>
@@ -13,8 +13,12 @@
 
 /*** COMMON ***/
 
-#define TRUE   1
-#define FALSE  0
+#define TRUE      1
+#define FALSE     0
+#define RUN       0
+#define CMND      1
+#define UTIL1ST   2
+#define UTIL      3
 
 /*** Define for LCD ***/
 #define RS        37
@@ -80,11 +84,21 @@ typedef struct stM304 {
 #define K_LEFT   8
 #define K_RIGHT 16
 
+#define K_DIGIT  32
+#define K_XDIGIT 33
+#define K_PRINT  34
+#define K_ALPHA  35
+#define K_ALNUM  36
+
+#define PUSH_SHORT 100
+#define PUSH_LONG  10000
+
 #ifndef _KYBDMEM_
 #define _KYBDMEM_
 struct KYBDMEM {
   uint8_t   kpos;
   uint16_t  selpos;
+  bool      longf;
 };
 #endif
 #ifndef _M304_COMMON_KYBD
@@ -115,7 +129,9 @@ class LCDd : public LiquidCrystal {
   LCDd(uint8_t rs, uint8_t enable,
       uint8_t d0, uint8_t d1, uint8_t d2, uint8_t d3);
   void initWriteArea(int);
-  int  setWriteChar(int,int,int,char),getDataInt(int,int,int,int);
+  int  setWriteChar(int,int,int,char),getDataInt(int,int,int,int),setLine(int,int,char *);
+  int  IntRead(int,int,int,int);
+  char CharRead(int,int,int);
   void LineWrite(int,int),PageWrite(int),CharWrite(int,int,int,char),IntWrite(int,int,int,int,bool,int);
 };
 
