@@ -1,6 +1,6 @@
 #ifndef _M304_H_
 #define _M304_H_
-#define _M304_H_V  104
+#define _M304_H_V  105
 
 #include <avr/pgmspace.h>
 #include <LiquidCrystal.h>
@@ -16,9 +16,14 @@
 #define TRUE      1
 #define FALSE     0
 #define RUN       0
-#define CMND      1
-#define UTIL1ST   2
-#define UTIL      3
+#define CMND1ST   1
+#define CMND      2
+#define UTIL1ST   3
+#define UTIL      4
+
+#define NETCONFIG 0
+#define RTCCONFIG 1
+#define SCHCONFIG 2
 
 /*** Define for LCD ***/
 #define RS        37
@@ -90,8 +95,8 @@ typedef struct stM304 {
 #define K_ALPHA  35
 #define K_ALNUM  36
 
-#define PUSH_SHORT 100
-#define PUSH_LONG  10000
+#define PUSH_SHORT 1000
+#define PUSH_LONG  300000
 
 #ifndef _KYBDMEM_
 #define _KYBDMEM_

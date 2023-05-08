@@ -68,13 +68,25 @@ struct KYBDMEM *getCrossKey(void) {
 
 int CancelChattering(int s) {
   unsigned long gauge=0;
-  while(!digitalRead(s)) gauge++;
+  gauge=0;
+  while(!digitalRead(s)) {
+    crosskey.longf = false;
+    gauge++;
+  }
   if ( gauge > PUSH_LONG ) {
     crosskey.longf = true;
+    Serial.begin(115200);
+    Serial.print("LONG=");
+    Serial.println(gauge);
+    Serial.end();
     return(LOW);
   }
   if ( gauge > PUSH_SHORT ) {
     crosskey.longf = false;
+    Serial.begin(115200);
+    Serial.print("SHORT=");
+    Serial.println(gauge);
+    Serial.end();
     return(LOW);
   }
   return(HIGH);
