@@ -183,7 +183,32 @@ int LCDd::IntRead(int p,int x,int y,int w) {
   return(i);
 }
 
-  
+void LCDd::TextWrite(int p,int x,int y,char a[]) {
+  int i,j;
+  char sv[6],fmt[5];
+  if (p >= PAGECNT) return;
+  i = strlen(a);
+  if ((i+x)>20) i=20-x;
+  Serial.begin(115200);
+  Serial.print("TextWrite x=");
+  Serial.print(x);
+  Serial.print(",y=");
+  Serial.print(y);
+  Serial.print(",a=");
+  Serial.print(a);
+  Serial.print(",i=");
+  Serial.println(i);
+  Serial.end();
+
+  for(j=0;j<i;j++) {
+    LCDd::setWriteChar(p,x+j,y,a[j]);
+  }
+  LCDd::setCursor(x,y);
+  LCDd::print(a);
+  LCDd::setCursor(x,y);
+}
+
+
 void LCDd::IntWrite(int p,int x,int y,int w,bool zp,int a) {
   int i;
   char sv[6],fmt[5];
@@ -230,5 +255,26 @@ int LCDd::getDataInt(int p,int x,int y,int w) {
   v = int(s);
 }
 
+
+void LCDd::IPWrite(int p,int x,int y,IPAddress ipa) {
+  int w;
+  int ip[4];
+  
+  x--;
+  for (byte tb=0; tb<4; tb++) {
+    if (ip[tb]<10) {
+      w = 1;
+    } else if (ip[tb]<100) {
+      w = 2;
+    } else {
+      w = 3;
+    }
+    LCDd::lcdd.IntWrite(p,x+1,y,w,false,ip[tb]);
+    x = x + w + 1;
+    if (tb<3) {
+      LCDd::lcdd.CharWrite(p,x,y,'.');
+    }
+  }
+}
 
 #undef _M304_CPP_
