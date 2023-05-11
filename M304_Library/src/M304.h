@@ -138,7 +138,7 @@ class LCDd : public LiquidCrystal {
   int  IntRead(int,int,int,int);
   char CharRead(int,int,int);
   void LineWrite(int,int),PageWrite(int),CharWrite(int,int,int,char),IntWrite(int,int,int,int,bool,int);
-  void TextWrite(int,int,int,char[]);
+  void TextWrite(int,int,int,char[]),IPWrite(int,int,int,IPAddress);
 };
 
 #endif

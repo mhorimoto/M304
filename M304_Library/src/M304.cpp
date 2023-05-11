@@ -259,9 +259,10 @@ int LCDd::getDataInt(int p,int x,int y,int w) {
 void LCDd::IPWrite(int p,int x,int y,IPAddress ipa) {
   int w;
   int ip[4];
-  
+
   x--;
   for (byte tb=0; tb<4; tb++) {
+    ip[tb] = (int)((ipa>>(8*tb)) & 0xff);
     if (ip[tb]<10) {
       w = 1;
     } else if (ip[tb]<100) {
@@ -269,10 +270,10 @@ void LCDd::IPWrite(int p,int x,int y,IPAddress ipa) {
     } else {
       w = 3;
     }
-    LCDd::lcdd.IntWrite(p,x+1,y,w,false,ip[tb]);
+    LCDd::IntWrite(p,x+1,y,w,false,ip[tb]);
     x = x + w + 1;
     if (tb<3) {
-      LCDd::lcdd.CharWrite(p,x,y,'.');
+      LCDd::CharWrite(p,x,y,'.');
     }
   }
 }
