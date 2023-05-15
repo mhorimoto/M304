@@ -1,6 +1,6 @@
 #ifndef _M304_H_
 #define _M304_H_
-#define _M304_H_V  105
+#define _M304_H_V  106
 
 #include <avr/pgmspace.h>
 #include <LiquidCrystal.h>
@@ -15,11 +15,17 @@
 
 #define TRUE      1
 #define FALSE     0
+
+/*** CMODE ***/
+
 #define RUN       0
-#define CMND1ST   1
-#define CMND      2
-#define UTIL1ST   3
-#define UTIL      4
+#define CMND      1
+
+#define NETCMND  10
+#define RTCCMND  11
+#define SCHCMND  12
+
+/*** CMENU ***/
 
 #define NETCONFIG 0
 #define RTCCONFIG 1
