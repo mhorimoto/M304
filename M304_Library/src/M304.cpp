@@ -175,10 +175,10 @@ int LCDd::IntRead(int p,int x,int y,int w) {
     c[i] = LCDd::tarea[p][x+i][y];
   }
   c[i]=(char)NULL;
-  Serial.begin(115200);
-  Serial.print("IntRead=");
-  Serial.println(c);
-  Serial.end();
+  //  Serial.begin(115200);
+  //  Serial.print("IntRead=");
+  //  Serial.println(c);
+  //  Serial.end();
   i = atoi(c);
   return(i);
 }
@@ -277,5 +277,83 @@ void LCDd::IPWrite(int p,int x,int y,IPAddress ipa) {
     }
   }
 }
+
+void LCDd::IPWriteWithCidr(int p,int x,int y,IPAddress ipa,int cidr) {
+  int w;
+  int ip[4];
+
+  x--;
+  for (byte tb=0; tb<4; tb++) {
+    ip[tb] = (int)((ipa>>(8*tb)) & 0xff);
+    if (ip[tb]<10) {
+      w = 1;
+    } else if (ip[tb]<100) {
+      w = 2;
+    } else {
+      w = 3;
+    }
+    LCDd::IntWrite(p,x+1,y,w,false,ip[tb]);
+    x = x + w + 1;
+    if (tb<3) {
+      LCDd::CharWrite(p,x,y,'.');
+    }
+  }
+  LCDd::CharWrite(p,x,y,'/');
+  if (cidr<10) {
+    w = 1;
+  } else {
+    w = 2;
+  }
+  LCDd::IntWrite(p,x+1,y,w,false,cidr);
+}
+
+int mask2cidr(IPAddress nma) {
+  int ci,tb;
+  ci=0;
+  for (tb=0;tb<4;tb++) {
+    //    Serial.begin(115200);
+    //    Serial.print("mask2cidr=");
+    //    Serial.print(nma[tb],DEC);
+    //    Serial.print("  ci=");
+    //    Serial.println(ci);
+    //    Serial.end();
+    switch((nma[tb]&0xff)) {
+    case 128:
+      ci+=1;
+      break;
+    case 192:
+      ci+=2;
+      break;
+    case 224:
+      ci+=3;
+      break;
+    case 240:
+      ci+=4;
+      break;
+    case 248:
+      ci+=5;
+      break;
+    case 252:
+      ci+=6;
+      break;
+    case 254:
+      ci+=7;
+      break;
+    case 255:
+      ci+=8;
+      break;
+    case 0:
+      break;
+    default:
+      return(-2);
+    }
+  }
+  //  Serial.begin(115200);
+  //  Serial.print("return mask2cidr=");
+  //  Serial.println(ci,DEC);
+  //  Serial.end();
+  return(ci);
+}
+
 
 #undef _M304_CPP_

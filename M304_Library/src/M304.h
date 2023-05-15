@@ -1,6 +1,6 @@
 #ifndef _M304_H_
 #define _M304_H_
-#define _M304_H_V  106
+#define _M304_H_V  107
 
 #include <avr/pgmspace.h>
 #include <LiquidCrystal.h>
@@ -85,6 +85,8 @@ typedef struct stM304 {
   IPAddress ip;
   IPAddress gw;
   IPAddress dns;
+  IPAddress subnet;
+  int cidr;
 };
 
 /*  Cross Key Switch */
@@ -144,7 +146,7 @@ class LCDd : public LiquidCrystal {
   int  IntRead(int,int,int,int);
   char CharRead(int,int,int);
   void LineWrite(int,int),PageWrite(int),CharWrite(int,int,int,char),IntWrite(int,int,int,int,bool,int);
-  void TextWrite(int,int,int,char[]),IPWrite(int,int,int,IPAddress);
+  void TextWrite(int,int,int,char[]),IPWrite(int,int,int,IPAddress),IPWriteWithCidr(int,int,int,IPAddress,int);
 };
 
 #endif
