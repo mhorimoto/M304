@@ -6,6 +6,7 @@
 #include <LiquidCrystal.h>
 #include <SPI.h>
 #include <Ethernet2.h>
+#include <EthernetUdp2.h>
 #include <EEPROM.h>
 #include <AT24CX.h>
 #include <Wire.h>

@@ -212,10 +212,10 @@ void LCDd::TextWrite(int p,int x,int y,char a[]) {
 void LCDd::IntWrite(int p,int x,int y,int w,bool zp,int a) {
   int i;
   char sv[6],fmt[5];
-  Serial.begin(115200);
+  //  Serial.begin(115200);
   if ((w < 1) || (w > 5)) {
-    Serial.println("w out of range");
-    Serial.end();
+    //    Serial.println("w out of range");
+    //    Serial.end();
     return;
   }
   if (p >= PAGECNT) return;
@@ -225,9 +225,9 @@ void LCDd::IntWrite(int p,int x,int y,int w,bool zp,int a) {
     snprintf(fmt,4,"%%%dd",w);
   }
   snprintf(sv,w+1,fmt,a);
-  Serial.print("IntWrite sv=");
-  Serial.println(sv);
-  Serial.end();
+  //  Serial.print("IntWrite sv=");
+  //  Serial.println(sv);
+  //  Serial.end();
 
   for(int i=0;i<w;i++) {
     LCDd::setWriteChar(p,x+i,y,sv[i]);
