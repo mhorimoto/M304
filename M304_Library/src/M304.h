@@ -82,6 +82,15 @@
 #define LC_DBGMSG   0x80  /* bit pos 0x80: Serial out, 0x40: LCD out */
 #define   SO_MSG    0x80
 #define   LCD_MSG   0x40
+#define LC_SCH_START 0x1000
+#define   STHR       0x0
+#define   STMN       0x1
+#define   EDHR       0x2
+#define   EDMN       0x3
+#define   INMN       0x4
+#define   DUMN       0x5
+#define   RLY0       0xe
+#define   RLY1       0xf
 #define LC_END      0x7fff
 
 typedef struct stM304 {

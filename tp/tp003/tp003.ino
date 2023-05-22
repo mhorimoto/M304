@@ -1,12 +1,14 @@
 #include <M304.h>
 
-char *pgname = "M304jp TP003 Ver1.20";
+char *pgname = "M304jp TP003 Ver1.30";
 void setup(void) {
   m304Init();
   delay(1000);
   digitalWrite(RLY8,LOW);
+  digitalWrite(RLY1,LOW);
   delay(1000);
   digitalWrite(RLY8,HIGH);
+  digitalWrite(RLY1,HIGH);
   lcd.setCursor(0,1);
   lcd.print("RLY MODE:");
   lcd.setCursor(12,2);
