@@ -1,6 +1,6 @@
 #ifndef _M304_H_
 #define _M304_H_
-#define _M304_H_V  107
+#define _M304_H_V  108
 
 #include <avr/pgmspace.h>
 #include <LiquidCrystal.h>
@@ -25,12 +25,14 @@
 #define NETCMND  10
 #define RTCCMND  11
 #define SCHCMND  12
+#define EEPROMCMND 13
 
 /*** CMENU ***/
 
 #define NETCONFIG 0
 #define RTCCONFIG 1
 #define SCHCONFIG 2
+#define EEPROMOPE 3
 
 /*** Define for LCD ***/
 #define RS        37
@@ -77,6 +79,9 @@
 #define LC_UECS_ID  0
 #define LC_MAC      6
 #define LC_START    0x20
+#define LC_DBGMSG   0x80  /* bit pos 0x80: Serial out, 0x40: LCD out */
+#define   SO_MSG    0x80
+#define   LCD_MSG   0x40
 #define LC_END      0x7fff
 
 typedef struct stM304 {

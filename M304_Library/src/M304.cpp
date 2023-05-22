@@ -68,6 +68,7 @@ struct KYBDMEM *getCrossKey(void) {
 
 int CancelChattering(int s) {
   unsigned long gauge=0;
+  bool debugMsgFlag(int);
   gauge=0;
   while(!digitalRead(s)) {
     crosskey.longf = false;
@@ -75,18 +76,18 @@ int CancelChattering(int s) {
   }
   if ( gauge > PUSH_LONG ) {
     crosskey.longf = true;
-    Serial.begin(115200);
-    Serial.print("LONG=");
-    Serial.println(gauge);
-    Serial.end();
+    if (debugMsgFlag(SO_MSG)) {
+      Serial.print("LONG=");
+      Serial.println(gauge);
+    }
     return(LOW);
   }
   if ( gauge > PUSH_SHORT ) {
     crosskey.longf = false;
-    Serial.begin(115200);
-    Serial.print("SHORT=");
-    Serial.println(gauge);
-    Serial.end();
+    if (debugMsgFlag(SO_MSG)) {
+      Serial.print("SHORT=");
+      Serial.println(gauge);
+    }
     return(LOW);
   }
   return(HIGH);
@@ -103,6 +104,13 @@ void debug_print(void) {
   Serial.println(st_m.gw);
   Serial.print("DNS:");
   Serial.println(st_m.dns);
+}
+
+bool debugMsgFlag(int a) {
+  byte d;
+  d = atmem.read(LC_DBGMSG);
+  if ((d&a)==a) return true;
+  return false;
 }
 
 void LCDd::initWriteArea(int p) {
@@ -189,17 +197,16 @@ void LCDd::TextWrite(int p,int x,int y,char a[]) {
   if (p >= PAGECNT) return;
   i = strlen(a);
   if ((i+x)>20) i=20-x;
-  Serial.begin(115200);
-  Serial.print("TextWrite x=");
-  Serial.print(x);
-  Serial.print(",y=");
-  Serial.print(y);
-  Serial.print(",a=");
-  Serial.print(a);
-  Serial.print(",i=");
-  Serial.println(i);
-  Serial.end();
-
+  if (debugMsgFlag(SO_MSG)) {
+    Serial.print("TextWrite x=");
+    Serial.print(x);
+    Serial.print(",y=");
+    Serial.print(y);
+    Serial.print(",a=");
+    Serial.print(a);
+    Serial.print(",i=");
+    Serial.println(i);
+  }
   for(j=0;j<i;j++) {
     LCDd::setWriteChar(p,x+j,y,a[j]);
   }
