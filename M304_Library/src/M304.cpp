@@ -40,6 +40,14 @@ void m304Init(void) {
   for ( i=0;i<6;i++ ) {
     st_m.mac[i] = atmem.read(LC_MAC+i);
   }
+  for ( i=0;i<8;i++ ) {
+    digitalWrite(RLY1+i,LOW);
+  }
+  delay(2000);
+  for ( i=0;i<8;i++ ) {
+    digitalWrite(RLY1+i,HIGH);
+  }
+  
 }
 
 /*********************************/

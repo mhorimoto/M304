@@ -16,6 +16,13 @@
 
 #define TRUE      1
 #define FALSE     0
+#define ERROR     -1
+#define NO        0
+#define UNMATCH   0
+#define IGNORE    1
+#define CHANGE_MAKE  2
+#define CHANGE_BREAK 3
+
 
 /*** CMODE ***/
 
@@ -89,8 +96,8 @@
 #define   EDMN       0x3
 #define   INMN       0x4
 #define   DUMN       0x5
-#define   RLY0       0xe
-#define   RLY1       0xf
+#define   RLY_L      0xe
+#define   RLY_H      0xf
 #define LC_END      0x7fff
 
 typedef struct stM304 {
